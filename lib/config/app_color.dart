@@ -32,4 +32,5 @@ class ColorFile {
   static Color grey600 = Color(0xFF757575);
   static Color grey700 = Color(0xFF616161);
   static Color grey800 = Color(0xFF424242);
+  static Color transparent = Colors.transparent;
 }

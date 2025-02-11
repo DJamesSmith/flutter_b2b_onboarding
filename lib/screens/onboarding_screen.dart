@@ -3,7 +3,7 @@ import 'package:b2b_multistep_onboarding/config/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:b2b_multistep_onboarding/controllers/onboarding_controller.dart';
-import 'package:b2b_multistep_onboarding/screens/dashboard_screen.dart';
+import 'package:b2b_multistep_onboarding/screens/bottom_nav_bar.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -16,7 +16,7 @@ class OnboardingScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Onboarding',
+          'B2B Onboarding',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -25,9 +25,16 @@ class OnboardingScreen extends StatelessWidget {
         children: [
           SizedBox(height: 10),
           _buildStepper(),
-          SizedBox(height: 10),
-          _buildStepContent(),
-          _buildNavigationButtons(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _buildStepContent(),
+                  _buildNavigationButtons(),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -41,18 +48,18 @@ class OnboardingScreen extends StatelessWidget {
         stepBorderRadius: 20,
         borderThickness: 2,
         stepRadius: 18,
-        finishedStepBorderColor: Colors.deepPurple,
-        finishedStepBackgroundColor: Colors.deepPurpleAccent,
-        activeStepBackgroundColor: Colors.deepPurple,
-        activeStepBorderColor: Colors.deepPurpleAccent,
+        finishedStepBorderColor: Colors.green,
+        finishedStepBackgroundColor: Colors.greenAccent,
+        activeStepBackgroundColor: Colors.green,
+        activeStepBorderColor: Colors.greenAccent,
         showTitle: true,
         activeStepTextColor: Colors.black,
         finishedStepTextColor: Colors.white,
         steps: [
           EasyStep(title: 'Business', icon: Icon(Icons.business)),
-          EasyStep(title: 'Email', icon: Icon(Icons.email)),
-          EasyStep(title: 'Logo', icon: Icon(Icons.image)),
-          EasyStep(title: 'Details', icon: Icon(Icons.info)),
+          EasyStep(title: 'Profile', icon: Icon(Icons.person)),
+          EasyStep(title: 'Operations', icon: Icon(Icons.settings)),
+          EasyStep(title: 'Legal', icon: Icon(Icons.file_present)),
           EasyStep(title: 'Review', icon: Icon(Icons.check_circle)),
         ],
       ),
@@ -99,13 +106,18 @@ class OnboardingScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: controller.currentStep.value > 0
                       ? Colors.red
-                      : Colors.grey,
+                      : Colors.transparent,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(
-                  child: const Text(
+                  child: Text(
                     'Back',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: TextStyle(
+                      color: controller.currentStep.value > 0
+                          ? Colors.white
+                          : ColorFile.transparent,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
@@ -116,7 +128,7 @@ class OnboardingScreen extends StatelessWidget {
                   controller.nextStep();
                 } else {
                   await controller.saveData();
-                  Get.off(() => const DashboardScreen());
+                  Get.off(() => const BottomNavBar());
                 }
               },
               child: Container(

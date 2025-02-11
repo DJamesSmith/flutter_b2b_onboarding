@@ -1,4 +1,5 @@
 import 'package:b2b_multistep_onboarding/config/app_color.dart';
+import 'package:b2b_multistep_onboarding/screens/bottom_nav_bar.dart';
 import 'package:b2b_multistep_onboarding/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: OnboardingScreen(),
+      // home: BottomNavBar(),
     );
   }
 }
