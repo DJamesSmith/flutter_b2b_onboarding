@@ -84,10 +84,10 @@ lib/
 
 ## 📷 Screenshots
 
-<img src="" data-canonical-src="https://github.com/user-attachments/assets/7a4eafbe-59ba-4203-b822-c5c83169ed68" width="245" height="533" />
-<img src="" data-canonical-src="https://github.com/user-attachments/assets/b660db23-9d88-4c94-98e9-35084b9334b1" width="245" height="533" />
-<img src="" data-canonical-src="https://github.com/user-attachments/assets/50b5d399-9c8b-4015-967d-b12b8bc945c4" width="245" height="533" />
-<img src="" data-canonical-src="https://github.com/user-attachments/assets/1f1ad0be-e42b-49fb-b952-2581b8ce535b" width="245" height="533" />
+<img src="https://github.com/user-attachments/assets/7a4eafbe-59ba-4203-b822-c5c83169ed68" width="245" height="533" />
+<img src="https://github.com/user-attachments/assets/b660db23-9d88-4c94-98e9-35084b9334b1" width="245" height="533" />
+<img src="https://github.com/user-attachments/assets/50b5d399-9c8b-4015-967d-b12b8bc945c4" width="245" height="533" />
+<img src="https://github.com/user-attachments/assets/1f1ad0be-e42b-49fb-b952-2581b8ce535b" width="245" height="533" />
 
 ## 📽️ Preview
 
