@@ -8,9 +8,11 @@ class ColorFile {
 
   static Color white = Color(0xFFFFFFFF);
   static Color green = Color(0xFF4CAF50);
+  static Color greenAccent = Color(0xFF69F0AE);
   static Color green300 = Color(0xFF81C784);
 
   static Color blue = Color(0xFF2196F3);
+  static Color blueAccent = Color(0xFF448AFF);
   static Color blue600 = Color(0xFF1E88E5);
   static Color blue800 = Color(0xFF1976D2);
   static Color blue500 = Color(0xFF2196F3);
@@ -21,6 +23,7 @@ class ColorFile {
 
   static Color black = Color(0xFF000000);
   static Color black12 = Color(0x1A000000);
+  static Color black54 = Color(0x8A000000);
   static Color black87 = Color(0x8A000000);
 
   static Color grey = Color(0xFF9E9E9E);

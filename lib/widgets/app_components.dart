@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:b2b_multistep_onboarding/config/app_color.dart';
+import 'package:b2b_multistep_onboarding/constants/constant_config.dart';
 import 'package:b2b_multistep_onboarding/controllers/onboarding_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,8 +26,13 @@ class AppComponents {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildImageUploader(),
           SizedBox(height: 20),
+          _buildImageUploader(
+            title: 'Business Logo',
+            imagePath: controller.businessLogo,
+            onPickImage: () => controller.pickImage(),
+          ),
+          SizedBox(height: 50),
           TextField(
             controller: controller.businessNameController,
             decoration: InputDecoration(
@@ -155,22 +161,31 @@ class AppComponents {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Column(
-        children: List.generate(arrProfileTxtFld.length, (index) {
-          final txtFld = arrProfileTxtFld[index];
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: TextField(
-              controller: txtFld['controllerName'],
-              decoration: txtFld['inputDeco'],
-              onChanged: txtFld['onChanged'],
-              keyboardType: txtFld.containsKey('keyboardType')
-                  ? txtFld['keyboardType']
-                  : TextInputType.text,
-              maxLength:
-                  txtFld.containsKey('maxLength') ? txtFld['maxLength'] : null,
-            ),
-          );
-        }),
+        children: [
+          _buildImageUploader(
+            isUser: true,
+            imagePath: controller.userImg,
+            onPickImage: () => controller.pickUserImage(),
+          ),
+          SizedBox(height: 20),
+          ...List.generate(arrProfileTxtFld.length, (index) {
+            final txtFld = arrProfileTxtFld[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: TextField(
+                controller: txtFld['controllerName'],
+                decoration: txtFld['inputDeco'],
+                onChanged: txtFld['onChanged'],
+                keyboardType: txtFld.containsKey('keyboardType')
+                    ? txtFld['keyboardType']
+                    : TextInputType.text,
+                maxLength: txtFld.containsKey('maxLength')
+                    ? txtFld['maxLength']
+                    : null,
+              ),
+            );
+          }),
+        ],
       ),
     );
   }
@@ -285,7 +300,7 @@ class AppComponents {
                 "Please review your details before proceeding.",
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.grey,
+                  color: ColorFile.grey,
                 ),
               ),
             ),
@@ -295,36 +310,51 @@ class AppComponents {
     );
   }
 
-  Widget _buildImageUploader() {
+  Widget _buildImageUploader({
+    String? title,
+    required RxString imagePath,
+    required VoidCallback onPickImage,
+    bool isUser = false,
+  }) {
     return GestureDetector(
-      onTap: () => controller.pickImage(),
-      child: Row(
-        children: [
-          Obx(
-            () => controller.businessLogo.value.isNotEmpty
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.file(
-                      File(controller.businessLogo.value),
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Icon(Icons.camera_alt),
-                  ),
-          ),
-          SizedBox(width: 20),
-          Text('Business Logo'),
-        ],
-      ),
+      onTap: onPickImage,
+      child: isUser
+          ? Center(child: imagePickerWidget(imagePath, isUser))
+          : Row(
+              children: [
+                imagePickerWidget(imagePath, isUser),
+                SizedBox(width: 20),
+                Text(title ?? ''),
+              ],
+            ),
+    );
+  }
+
+  Widget imagePickerWidget(RxString imagePath, bool isUser) {
+    return Obx(
+      () => imagePath.value.isNotEmpty
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.file(
+                File(imagePath.value),
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
+              ),
+            )
+          : Container(
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                color: ColorFile.grey300,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Icon(
+                isUser ? Icons.person : Icons.camera_alt,
+                size: isUser ? 60 : 40,
+                color: ColorFile.grey700,
+              ),
+            ),
     );
   }
 
@@ -336,7 +366,7 @@ class AppComponents {
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Colors.black87,
+          color: ColorFile.black87,
         ),
       ),
     );
@@ -349,7 +379,7 @@ class AppComponents {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
-          Text(value, style: TextStyle(color: Colors.black54)),
+          Text(value, style: TextStyle(color: ColorFile.black54)),
         ],
       ),
     );
@@ -374,7 +404,7 @@ class AppComponents {
           return Center(
             child: Text(
               "No logo uploaded",
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(color: ColorFile.grey),
             ),
           );
         }

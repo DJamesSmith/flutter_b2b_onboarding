@@ -135,17 +135,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: EdgeInsets.symmetric(vertical: 10),
             child: businessLogo.isNotEmpty
                 ? Container(
                     height: 90,
                     width: 90,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: ColorFile.white,
                       borderRadius: BorderRadius.circular(45),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black12,
+                          color: ColorFile.black12,
                           blurRadius: 15,
                           spreadRadius: 5,
                           offset: Offset(0, 15),
@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     ),
                   )
-                : const Icon(Icons.business, size: 60, color: Colors.grey),
+                : Icon(Icons.business, size: 60, color: ColorFile.grey),
           ),
           const SizedBox(width: 15),
           Column(
@@ -182,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               Text(
                 businessName,
-                style: const TextStyle(fontSize: 14, color: Colors.grey),
+                style: TextStyle(fontSize: 14, color: ColorFile.grey),
               ),
             ],
           ),
@@ -208,15 +208,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         margin: const EdgeInsets.symmetric(horizontal: 8),
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: ColorFile.white,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: const [
-            BoxShadow(color: Colors.black12, blurRadius: 8, spreadRadius: 1),
+          boxShadow: [
+            BoxShadow(color: ColorFile.black12, blurRadius: 8, spreadRadius: 1),
           ],
         ),
         child: Column(
           children: [
-            Icon(icon, size: 30, color: Colors.blue),
+            Icon(icon, size: 30, color: ColorFile.blue),
             const SizedBox(height: 10),
             Text(
               appComponents.formatNumber(value),
@@ -227,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             const SizedBox(height: 5),
             Text(
               title,
-              style: const TextStyle(fontSize: 14, color: Colors.grey),
+              style: TextStyle(fontSize: 14, color: ColorFile.grey),
             ),
           ],
         ),
@@ -255,36 +255,36 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 PieChartData(
                   sections: [
                     PieChartSectionData(
-                      color: Colors.blue,
+                      color: ColorFile.blue,
                       value: 60,
                       title: 'Product\nSales\n60%',
                       radius: 50,
-                      titleStyle: const TextStyle(
+                      titleStyle: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: ColorFile.white,
                       ),
                     ),
                     PieChartSectionData(
-                      color: Colors.green,
+                      color: ColorFile.green,
                       value: 30,
                       title: 'Service\n30%',
                       radius: 50,
-                      titleStyle: const TextStyle(
+                      titleStyle: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: ColorFile.white,
                       ),
                     ),
                     PieChartSectionData(
-                      color: Colors.orange,
+                      color: ColorFile.orange,
                       value: 10,
                       title: 'Other\n10%',
                       radius: 50,
-                      titleStyle: const TextStyle(
+                      titleStyle: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: ColorFile.white,
                       ),
                     ),
                   ],
@@ -346,7 +346,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   lineBarsData: [
                     LineChartBarData(
                       isCurved: true,
-                      color: Colors.blue,
+                      color: ColorFile.blue,
                       barWidth: 3,
                       spots: [
                         FlSpot(0, 10),
@@ -356,7 +356,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ],
                       belowBarData: BarAreaData(
                         show: true,
-                        color: Colors.blue.withOpacity(0.2),
+                        color: ColorFile.blue.withOpacity(0.2),
                       ),
                     ),
                   ],
@@ -385,7 +385,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     height: 70,
                     width: 70,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: ColorFile.white,
                       borderRadius: BorderRadius.circular(35),
                     ),
                   ),
@@ -396,7 +396,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         height: 10,
                         width: MediaQuery.of(context).size.width * 0.5,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: ColorFile.white,
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
@@ -405,7 +405,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         height: 10,
                         width: MediaQuery.of(context).size.width * 0.3,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: ColorFile.white,
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
@@ -414,7 +414,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         height: 10,
                         width: MediaQuery.of(context).size.width * 0.2,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: ColorFile.white,
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
@@ -429,7 +429,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     child: Container(
                       height: 40,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: ColorFile.white,
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
@@ -439,7 +439,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     child: Container(
                       height: 40,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: ColorFile.white,
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
@@ -450,7 +450,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Container(
                 height: 200,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: ColorFile.white,
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
@@ -458,7 +458,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Container(
                 height: 200,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: ColorFile.white,
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
@@ -472,7 +472,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       child: Container(
                         height: 100,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: ColorFile.white,
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),

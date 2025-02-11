@@ -1,3 +1,4 @@
+import 'package:b2b_multistep_onboarding/config/app_color.dart';
 import 'package:b2b_multistep_onboarding/screens/home_screen.dart';
 import 'package:b2b_multistep_onboarding/screens/insights_screen.dart';
 import 'package:b2b_multistep_onboarding/screens/profile_screen.dart';
@@ -34,9 +35,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.grey,
+        backgroundColor: ColorFile.white,
+        selectedItemColor: ColorFile.blueAccent,
+        unselectedItemColor: ColorFile.grey,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         items: const [

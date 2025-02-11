@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:b2b_multistep_onboarding/config/app_color.dart';
 import 'package:b2b_multistep_onboarding/model/business_model.dart';
 import 'package:b2b_multistep_onboarding/model/user_model.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class OnboardingController extends GetxController {
   var selectedBusinessType = ''.obs;
   var selectedIndustry = ''.obs;
 
+  var userImg = ''.obs;
   var fullName = ''.obs;
   var role = ''.obs;
   var email = ''.obs;
@@ -96,8 +98,8 @@ class OnboardingController extends GetxController {
         Get.snackbar(
           "Error",
           "Please fill all required fields",
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
+          backgroundColor: ColorFile.red,
+          colorText: ColorFile.white,
         );
         return;
       }
@@ -114,7 +116,7 @@ class OnboardingController extends GetxController {
   Future<void> saveData() async {
     if (!canProceedToNextStep()) {
       Get.snackbar("Error", "Please complete the required fields",
-          backgroundColor: Colors.red, colorText: Colors.white);
+          backgroundColor: ColorFile.red, colorText: ColorFile.white);
       return;
     }
 
@@ -134,6 +136,7 @@ class OnboardingController extends GetxController {
       role: role.value,
       email: email.value,
       phone: phone.value,
+      userImg: userImg.value,
     );
 
     final prefs = await SharedPreferences.getInstance();
@@ -145,5 +148,11 @@ class OnboardingController extends GetxController {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) businessLogo.value = pickedFile.path;
+  }
+
+  Future<void> pickUserImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) userImg.value = pickedFile.path;
   }
 }

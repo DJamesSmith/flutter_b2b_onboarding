@@ -48,13 +48,13 @@ class OnboardingScreen extends StatelessWidget {
         stepBorderRadius: 20,
         borderThickness: 2,
         stepRadius: 18,
-        finishedStepBorderColor: Colors.green,
-        finishedStepBackgroundColor: Colors.greenAccent,
-        activeStepBackgroundColor: Colors.green,
-        activeStepBorderColor: Colors.greenAccent,
+        finishedStepBorderColor: ColorFile.green,
+        finishedStepBackgroundColor: ColorFile.greenAccent,
+        activeStepBackgroundColor: ColorFile.green,
+        activeStepBorderColor: ColorFile.greenAccent,
         showTitle: true,
-        activeStepTextColor: Colors.black,
-        finishedStepTextColor: Colors.white,
+        activeStepTextColor: ColorFile.black,
+        finishedStepTextColor: ColorFile.white,
         steps: [
           EasyStep(title: 'Business', icon: Icon(Icons.business)),
           EasyStep(title: 'Profile', icon: Icon(Icons.person)),
@@ -105,8 +105,8 @@ class OnboardingScreen extends StatelessWidget {
                 width: 120,
                 decoration: BoxDecoration(
                   color: controller.currentStep.value > 0
-                      ? Colors.red
-                      : Colors.transparent,
+                      ? ColorFile.red
+                      : ColorFile.transparent,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(
@@ -114,7 +114,7 @@ class OnboardingScreen extends StatelessWidget {
                     'Back',
                     style: TextStyle(
                       color: controller.currentStep.value > 0
-                          ? Colors.white
+                          ? ColorFile.white
                           : ColorFile.transparent,
                       fontSize: 16,
                     ),
