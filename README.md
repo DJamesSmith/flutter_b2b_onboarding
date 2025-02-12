@@ -70,7 +70,7 @@ lib/
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo-url.git
+   git clone https://github.com/DJamesSmith/flutter_b2b_onboarding.git
    cd your-project-folder
    ```
 2. Install dependencies:
