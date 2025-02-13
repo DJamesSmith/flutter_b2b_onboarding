@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:b2b_multistep_onboarding/config/app_color.dart';
-import 'package:b2b_multistep_onboarding/constants/constant_config.dart';
 import 'package:b2b_multistep_onboarding/controllers/onboarding_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -106,6 +105,31 @@ class AppComponents {
     );
   }
 
+  Widget stepTwo(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 20),
+          TextField(
+            controller: controller.panController,
+            decoration: _inputDecoration(
+              title: 'PAN Number',
+              prefixIcon: Icon(Icons.credit_card),
+              errorText: controller.isPanValid.value ? null : "Invalid PAN",
+            ),
+            onChanged: (value) {
+              controller.pan.value = value;
+              controller.validateFields();
+            },
+          ),
+          SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+
   List<Map<String, dynamic>> profileTxtFldHints() {
     return [
       {
@@ -143,7 +167,7 @@ class AppComponents {
           title: "Phone",
           prefixIcon: Icon(Icons.phone),
           errorText:
-              controller.isPhoneValid.value ? null : "Invalid phone number",
+          controller.isPhoneValid.value ? null : "Invalid phone number",
         ),
         'onChanged': (value) {
           controller.phone.value = value;
@@ -155,7 +179,7 @@ class AppComponents {
     ];
   }
 
-  Widget stepTwo(BuildContext context) {
+  Widget stepThree(BuildContext context) {
     final arrProfileTxtFld = profileTxtFldHints();
 
     return Padding(
@@ -213,7 +237,7 @@ class AppComponents {
     ];
   }
 
-  Widget stepThree(BuildContext context) {
+  Widget stepFour(BuildContext context) {
     final arrOperationsTxtFld = operationsTxtFldHints();
 
     return Padding(
@@ -255,7 +279,7 @@ class AppComponents {
     ];
   }
 
-  Widget stepFour(BuildContext context) {
+  Widget stepFive(BuildContext context) {
     final arrLegalTxtFld = legalTxtFldHints();
 
     return Padding(
@@ -273,7 +297,7 @@ class AppComponents {
     );
   }
 
-  Widget stepFive(BuildContext context) {
+  Widget stepSix(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(20),
       elevation: 5,

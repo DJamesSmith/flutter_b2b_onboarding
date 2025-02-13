@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:b2b_multistep_onboarding/config/app_color.dart';
 import 'package:b2b_multistep_onboarding/model/business_model.dart';
 import 'package:b2b_multistep_onboarding/model/user_model.dart';
@@ -21,6 +22,11 @@ class OnboardingController extends GetxController {
   final TextEditingController gstinController = TextEditingController();
   final TextEditingController registrationNumberController =
       TextEditingController();
+  final TextEditingController panController = TextEditingController();
+
+  var pan = ''.obs;
+  var isPanValid = true.obs;
+  var isLoading = false.obs;
 
   var businessName = ''.obs;
   var businessType = ''.obs;
@@ -59,6 +65,8 @@ class OnboardingController extends GetxController {
       isBusinessTypeValid.value = selectedBusinessType.value.isNotEmpty;
       isIndustryValid.value = selectedIndustry.value.isNotEmpty;
     } else if (currentStep.value == 1) {
+      isPanValid.value = pan.value.isNotEmpty;
+    } else if (currentStep.value == 2) {
       isEmailValid.value = isValidEmail(email.value);
       isPhoneValid.value = isValidPhone(phone.value);
     }
@@ -86,6 +94,8 @@ class OnboardingController extends GetxController {
           isBusinessTypeValid.value &&
           isIndustryValid.value;
     } else if (currentStep.value == 1) {
+      return isPanValid.value;
+    } else if (currentStep.value == 2) {
       return isEmailValid.value && isPhoneValid.value;
     }
 
@@ -93,7 +103,7 @@ class OnboardingController extends GetxController {
   }
 
   void nextStep() {
-    if (currentStep.value == 0 || currentStep.value == 1) {
+    if (currentStep.value == 0 || currentStep.value == 2) {
       if (!canProceedToNextStep()) {
         Get.snackbar(
           "Error",
@@ -154,5 +164,61 @@ class OnboardingController extends GetxController {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) userImg.value = pickedFile.path;
+  }
+
+  Future<void> verifyPan() async {
+    isLoading.value = true;
+
+    final url = Uri.parse('https://dg-sandbox.setu.co/api/verify/pan');
+    final headers = {
+      'content-type': 'application/json',
+      'x-client-id': '292c6e76-dabf-49c4-8e48-90fba2916673',
+      'x-client-secret': '7IZMe9zvoBBuBukLiCP7n4KLwSOy11oP',
+      'x-product-instance-id': '439244ff-114e-41a8-ae74-a783f160622d',
+    };
+
+    final body = jsonEncode({
+      'pan': pan.value,
+      'consent': 'Y',
+      'reason': 'Reason for verifying PAN set by the developer',
+    });
+
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      final responseBody = jsonDecode(response.body);
+      final verificationStatus = responseBody['verification'];
+      final message = responseBody['message'];
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          responseBody['verification'],
+          message,
+          backgroundColor:
+              verificationStatus == 'SUCCESS' ? Colors.green : Colors.red,
+          colorText: Colors.white,
+        );
+        if (verificationStatus == 'SUCCESS') {
+          final fullName = responseBody['data']['full_name'];
+          fullNameController.text = fullName;
+          nextStep();
+        }
+      } else {
+        Get.snackbar(
+          'Error',
+          message,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

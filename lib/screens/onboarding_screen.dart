@@ -1,5 +1,6 @@
 import 'package:b2b_multistep_onboarding/widgets/app_components.dart';
 import 'package:b2b_multistep_onboarding/config/app_color.dart';
+import 'package:b2b_multistep_onboarding/widgets/show_animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:b2b_multistep_onboarding/controllers/onboarding_controller.dart';
@@ -30,7 +31,7 @@ class OnboardingScreen extends StatelessWidget {
               child: Column(
                 children: [
                   _buildStepContent(),
-                  _buildNavigationButtons(),
+                  _buildNavigationButtons(context),
                 ],
               ),
             ),
@@ -47,7 +48,7 @@ class OnboardingScreen extends StatelessWidget {
         stepShape: StepShape.rRectangle,
         stepBorderRadius: 20,
         borderThickness: 2,
-        stepRadius: 18,
+        stepRadius: 30,
         finishedStepBorderColor: ColorFile.green,
         finishedStepBackgroundColor: ColorFile.greenAccent,
         activeStepBackgroundColor: ColorFile.green,
@@ -55,8 +56,10 @@ class OnboardingScreen extends StatelessWidget {
         showTitle: true,
         activeStepTextColor: ColorFile.black,
         finishedStepTextColor: ColorFile.white,
+        internalPadding: 40.0,
         steps: [
           EasyStep(title: 'Business', icon: Icon(Icons.business)),
+          EasyStep(title: 'PAN Verification', icon: Icon(Icons.badge)),
           EasyStep(title: 'Profile', icon: Icon(Icons.person)),
           EasyStep(title: 'Operations', icon: Icon(Icons.settings)),
           EasyStep(title: 'Legal', icon: Icon(Icons.file_present)),
@@ -81,13 +84,15 @@ class OnboardingScreen extends StatelessWidget {
           return appComponent.stepFour(Get.context!);
         case 4:
           return appComponent.stepFive(Get.context!);
+        case 5:
+          return appComponent.stepSix(Get.context!);
         default:
           return Container();
       }
     });
   }
 
-  Widget _buildNavigationButtons() {
+  Widget _buildNavigationButtons(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
       child: Obx(
@@ -96,12 +101,10 @@ class OnboardingScreen extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: controller.currentStep.value > 0
-                  ? () {
-                      controller.previousStep();
-                    }
+                  ? () => controller.previousStep()
                   : null,
               child: Container(
-                height: 60,
+                height: 40,
                 width: 120,
                 decoration: BoxDecoration(
                   color: controller.currentStep.value > 0
@@ -124,7 +127,18 @@ class OnboardingScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                if (controller.currentStep.value < 4) {
+                if (controller.currentStep.value == 1) {
+                  if (controller.pan.value.isNotEmpty) {
+                    await controller.verifyPan();
+                  } else {
+                    Get.snackbar(
+                      'Error',
+                      'Please enter a PAN number',
+                      backgroundColor: Colors.red,
+                      colorText: Colors.white,
+                    );
+                  }
+                } else if (controller.currentStep.value < 4) {
                   controller.nextStep();
                 } else {
                   await controller.saveData();
@@ -132,21 +146,38 @@ class OnboardingScreen extends StatelessWidget {
                 }
               },
               child: Container(
-                height: 60,
-                width: 120,
+                height: 40,
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
                   color: ColorFile.blue,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Center(
-                  child: Text(
-                    controller.currentStep.value < 4 ? 'Next' : 'Finish',
-                    style: TextStyle(
-                      color: ColorFile.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
+                child: controller.currentStep.value < 4
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Next',
+                            style: TextStyle(color: ColorFile.white),
+                          ),
+                          SizedBox(width: 10),
+                          ShowAnimations().arrowNext(context),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Finish',
+                            style: TextStyle(
+                              color: ColorFile.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          ShowAnimations().arrowNext(context),
+                        ],
+                      ),
               ),
             ),
           ],

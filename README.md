@@ -19,6 +19,18 @@ A Flutter-based B2B application with a multi-step onboarding process and a dynam
 business users. The app ensures smooth user onboarding and provides a visually engaging experience
 with animations and step-by-step data collection.
 
+## 📷 Screenshots
+
+<img src="https://github.com/user-attachments/assets/ba7c0e59-9726-4a31-9047-01f87dd18ef5" width="245" height="533" />
+<img src="https://github.com/user-attachments/assets/7eed6fa1-f08f-4b27-87d0-1fd2d9ba9deb" width="245" height="533" />
+<img src="https://github.com/user-attachments/assets/03b6c15f-dce8-479d-aa3b-4febf8f62496" width="245" height="533" />
+<img src="https://github.com/user-attachments/assets/50b5d399-9c8b-4015-967d-b12b8bc945c4" width="245" height="533" />
+<img src="https://github.com/user-attachments/assets/1f1ad0be-e42b-49fb-b952-2581b8ce535b" width="245" height="533" />
+
+## 📽️ Preview
+
+![](https://github.com/user-attachments/assets/ad92cfca-6405-41de-b0e6-7518531e6347)
+
 ## 📌 Features
 
 ### ✅ Multi-Step Onboarding Process
@@ -28,6 +40,12 @@ with animations and step-by-step data collection.
 - **Step 3:** Business Operations (Industry, Employee Count, Revenue)
 - **Step 4:** Legal & Tax Information (GSTIN, Registration Number)
 - **Step 5:** Review & Complete
+
+### ✅ PAN Verification via API Integration
+
+- Uses an external PAN verification API to validate PAN numbers.
+- Users input their PAN, and the app fetches validation status from the API.
+- Displays verification success/failure messages.
 
 ### ✅ Local Data Storage
 
@@ -65,6 +83,7 @@ lib/
 - **shimmer** (^3.0.0) → Loading effect: [shimmer](https://pub.dev/packages/shimmer)
 - **shared_preferences** (^2.2.2) → Local data storage
 - **get** (^4.6.6) → State management
+- **http** (^0.13.4) → API requests
 
 ## 🚀 Setup & Installation
 
@@ -82,18 +101,6 @@ lib/
    flutter run
    ```
 
-## 📷 Screenshots
-
-<img src="https://github.com/user-attachments/assets/7a4eafbe-59ba-4203-b822-c5c83169ed68" width="245" height="533" />
-<img src="https://github.com/user-attachments/assets/b660db23-9d88-4c94-98e9-35084b9334b1" width="245" height="533" />
-<img src="https://github.com/user-attachments/assets/50b5d399-9c8b-4015-967d-b12b8bc945c4" width="245" height="533" />
-<img src="https://github.com/user-attachments/assets/1f1ad0be-e42b-49fb-b952-2581b8ce535b" width="245" height="533" />
-
-## 📽️ Preview
-
-![](https://github.com/user-attachments/assets/d461d58f-1a97-4ab9-80f4-1a0da5818252)
-
 ---
 
-Developed with ❤️ using Flutter.
-
+Built with passion and precision using Flutter.

@@ -129,7 +129,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                     ),
                   )
-                : Icon(Icons.person, size: 70, color: ColorFile.grey),
+                : Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: ColorFile.grey200,
+                      borderRadius: BorderRadius.circular(85),
+                    ),
+                    child: Icon(Icons.person, size: 70, color: ColorFile.grey),
+                  ),
           ],
         ),
         SizedBox(height: 20),
@@ -141,12 +149,14 @@ class _ProfileScreenState extends State<ProfileScreen>
             ? Text(
                 role,
                 style: TextStyle(
-                    fontWeight: FontWeight.w400, color: ColorFile.grey500),
+                  fontWeight: FontWeight.w400,
+                  color: ColorFile.grey500,
+                ),
               )
             : SizedBox(),
         Text(
           businessName,
-          style:  TextStyle(fontSize: 16, color: ColorFile.grey),
+          style: TextStyle(fontSize: 16, color: ColorFile.grey),
         ),
       ],
     );

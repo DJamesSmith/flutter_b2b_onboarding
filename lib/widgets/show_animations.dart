@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:b2b_multistep_onboarding/config/app_color.dart';
 import 'package:b2b_multistep_onboarding/constants/asset_constant.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +61,41 @@ class ShowAnimations {
       reverse: true,
       width: 250,
       height: 250,
+    );
+  }
+
+  Widget arrowNext(BuildContext context) {
+    return Lottie.asset(
+      AssetConstants.arrowNext,
+      repeat: true,
+      height: 40,
+      delegates: LottieDelegates(
+        values: [
+          ValueDelegate.color(
+            const ['**'],
+            value: ColorFile.green300,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget arrowDown(BuildContext context) {
+    return Transform.rotate(
+      angle: -pi * .5,
+      child: Lottie.asset(
+        AssetConstants.arrowDown,
+        repeat: true,
+        height: 40,
+        delegates: LottieDelegates(
+          values: [
+            ValueDelegate.color(
+              const ['**'],
+              value: ColorFile.green300,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
