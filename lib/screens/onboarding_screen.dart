@@ -138,7 +138,7 @@ class OnboardingScreen extends StatelessWidget {
                       colorText: Colors.white,
                     );
                   }
-                } else if (controller.currentStep.value < 4) {
+                } else if (controller.currentStep.value < 5) {
                   controller.nextStep();
                 } else {
                   await controller.saveData();
@@ -152,7 +152,7 @@ class OnboardingScreen extends StatelessWidget {
                   color: ColorFile.blue,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: controller.currentStep.value < 4
+                child: controller.currentStep.value < 5
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

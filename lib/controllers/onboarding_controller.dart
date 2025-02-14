@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:http/http.dart' as http;
 import 'package:b2b_multistep_onboarding/config/app_color.dart';
@@ -24,9 +26,25 @@ class OnboardingController extends GetxController {
       TextEditingController();
   final TextEditingController panController = TextEditingController();
 
+  var otpControllers = List.generate(4, (index) => TextEditingController()).obs;
+  var otpFocusNodes = List.generate(4, (index) => FocusNode()).obs;
+
   var pan = ''.obs;
   var isPanValid = true.obs;
   var isLoading = false.obs;
+
+  var remainingTime = 60.obs;
+  Timer? _verificationCodeTimer;
+
+  var isEmailVerified = false.obs;
+  var generatedVerificationCode = ''.obs;
+  var enteredVerificationCode = ''.obs;
+  var isVerifyingEmail = false.obs;
+
+  var isPhoneVerified = false.obs;
+  var generatedPhoneOTP = ''.obs;
+  var enteredPhoneOTP = ''.obs;
+  var isVerifyingPhone = false.obs;
 
   var businessName = ''.obs;
   var businessType = ''.obs;
@@ -96,7 +114,7 @@ class OnboardingController extends GetxController {
     } else if (currentStep.value == 1) {
       return isPanValid.value;
     } else if (currentStep.value == 2) {
-      return isEmailValid.value && isPhoneValid.value;
+      return isEmailValid.value && isPhoneValid.value && isPhoneVerified.value;
     }
 
     return true;
@@ -194,8 +212,8 @@ class OnboardingController extends GetxController {
           responseBody['verification'],
           message,
           backgroundColor:
-              verificationStatus == 'SUCCESS' ? Colors.green : Colors.red,
-          colorText: Colors.white,
+              verificationStatus == 'SUCCESS' ? ColorFile.green : ColorFile.red,
+          colorText: ColorFile.white,
         );
         if (verificationStatus == 'SUCCESS') {
           final fullName = responseBody['data']['full_name'];
@@ -206,19 +224,122 @@ class OnboardingController extends GetxController {
         Get.snackbar(
           'Error',
           message,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
+          backgroundColor: ColorFile.red,
+          colorText: ColorFile.white,
         );
       }
     } catch (e) {
       Get.snackbar(
         'Error',
         'An error occurred: $e',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
+        backgroundColor: ColorFile.red,
+        colorText: ColorFile.white,
       );
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  void sendEmailVerification() async {
+    isVerifyingEmail.value = true;
+    await Future.delayed(Duration(seconds: 2));
+
+    final random = Random();
+    generatedVerificationCode.value =
+        (100000 + random.nextInt(899999)).toString();
+
+    Get.snackbar(
+      "Verification Code Sent",
+      "Enter the Verification Code sent to ${emailController.text}",
+      backgroundColor: ColorFile.blue,
+      colorText: ColorFile.white,
+    );
+
+    debugPrint('Email Verify Code: ${generatedVerificationCode.value}');
+    isVerifyingEmail.value = false;
+  }
+
+  void verifyVerificationCode(String verificationCode) {
+    if (verificationCode == generatedVerificationCode.value) {
+      isEmailVerified.value = true;
+      Get.back();
+      Get.snackbar(
+        "Email Verified",
+        "Your email has been successfully verified!",
+        backgroundColor: ColorFile.green,
+        colorText: ColorFile.white,
+      );
+    } else {
+      Get.snackbar(
+        "Invalid VerificationCode",
+        "The VerificationCode you entered is incorrect. Please try again.",
+        backgroundColor: ColorFile.red,
+        colorText: ColorFile.white,
+      );
+    }
+  }
+
+  void startVerificationCodeTimer() {
+    remainingTime.value = 15;
+    _verificationCodeTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (remainingTime.value > 0) {
+        remainingTime.value--;
+      } else {
+        _verificationCodeTimer?.cancel();
+      }
+    });
+  }
+
+  void resetVerificationCodeTimer() {
+    _verificationCodeTimer?.cancel();
+    startVerificationCodeTimer();
+  }
+
+  @override
+  void onClose() {
+    _verificationCodeTimer?.cancel();
+    super.onClose();
+  }
+
+  void sendPhoneVerification() async {
+    isVerifyingPhone.value = true;
+    await Future.delayed(Duration(seconds: 2));
+
+    for (var controller in otpControllers) {
+      controller.clear();
+    }
+
+    final random = Random();
+    generatedPhoneOTP.value = (1000 + random.nextInt(8999)).toString();
+
+    Get.snackbar(
+      "OTP Sent",
+      "Enter the OTP sent to ${phoneController.text}",
+      backgroundColor: ColorFile.blue,
+      colorText: ColorFile.white,
+    );
+
+    debugPrint('Phone OTP: ${generatedPhoneOTP.value}');
+    isVerifyingPhone.value = false;
+  }
+
+  void verifyPhoneOTP(String enteredOTP) {
+    if (enteredOTP == generatedPhoneOTP.value) {
+      isPhoneVerified.value = true;
+      Get.back();
+      Get.snackbar(
+        "Phone Verified",
+        "Your phone number has successfully been verified!",
+        backgroundColor: ColorFile.green,
+        colorText: ColorFile.white,
+      );
+    } else {
+      Get.snackbar(
+        "Invalid OTP",
+        "The OTP you entered is incorrect. Please try again.",
+        backgroundColor: ColorFile.red,
+        colorText: ColorFile.white,
+      );
     }
   }
 }

@@ -47,6 +47,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Future<void> _loadSavedData() async {
     final prefs = await SharedPreferences.getInstance();
+    await Future.delayed(const Duration(seconds: 2));
+    if (!mounted) return;
 
     final String? businessDataString = prefs.getString('businessData');
     if (businessDataString != null) {
@@ -62,8 +64,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         registrationNumber = businessData['registrationNumber'] ?? 'N/A';
       });
     }
-
-    await Future.delayed(const Duration(seconds: 2));
 
     final String? userDataString = prefs.getString('userData');
     if (userDataString != null) {

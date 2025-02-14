@@ -20,6 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
   bool isLoading = true;
   final AppComponents appComponents = AppComponents();
+  Completer<void>? _completer;
 
   String businessName = 'businessName';
   String email = 'dion@gmail.com';
@@ -33,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   void initState() {
     super.initState();
+    _completer = Completer<void>();
     _loadSavedData();
 
     _fadeController = AnimationController(
@@ -44,6 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   Future<void> _loadSavedData() async {
     final prefs = await SharedPreferences.getInstance();
     await Future.delayed(const Duration(seconds: 2));
+    if (_completer?.isCompleted ?? true) return;
 
     final String? businessDataString = prefs.getString('businessData');
     if (businessDataString != null) {
@@ -69,6 +72,8 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   void dispose() {
+    _completer?.complete();
+    _completer = null;
     _fadeController.dispose();
     super.dispose();
   }
